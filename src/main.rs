@@ -4,10 +4,12 @@ use std::env;
 use std::time::Instant;
 
 mod bfs;
-mod common;
+mod node;
+mod iddfs;
+mod dls;
 
 pub static SHOW_STEPS: bool = true;
-pub static SHOW_QUEUE_EVERY_STEP: bool = false; // Warning: Large Numbers!
+pub static SHOW_QUEUE_STACK_EVERY_STEP: bool = false; // Warning: Large Numbers!
 pub static SHOW_TIME_EVERY_STEP: bool = false;
 pub static FACTORIAL_LIMIT: u32 = 100_000;
 
@@ -30,13 +32,14 @@ fn main() {
         let start: u32 = split[0].trim().parse().expect("Failed to parse range");
         let end: u32 = split[1].trim().parse().expect("Failed to parse range");
         for i in start..end {
-            bfs::find_number(i);
+            iddfs::find_number(i);
         }
         let duration = start_time.elapsed();
         println!("Took {:?}", duration);
     } else {
         let input: u32 = input.trim().parse().expect("Failed to parse range");
-        bfs::find_number(input);
+        // bfs::find_number(input);
+        iddfs::find_number(input);
     }
 
 }

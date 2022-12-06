@@ -19,7 +19,7 @@ pub struct Node {
 }
 
 pub fn print_result(v: Node, wanted: u32, total_duration: Duration) {
-    print!("Found {wanted} after {:?}", total_duration);
+    print!("Found {wanted} after {:?} at depth {}", total_duration, v.operations.len()-1);
     if SHOW_STEPS {
         print!(" | ");
         for operation in v.operations {
