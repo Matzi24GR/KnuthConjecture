@@ -11,7 +11,7 @@ pub fn find_number(wanted: u32) -> Result<u32, &'static str> {
         match result {
             Ok(duration) => {
                 total_duration = total_duration.saturating_add(duration);
-                print!("Really took {:?}8", total_duration);
+                print!("Really took {:?}s", total_duration);
                 break Ok(wanted)
             },
             Err(duration) => {
