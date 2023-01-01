@@ -32,14 +32,14 @@ fn main() {
         let start: u32 = split[0].trim().parse().expect("Failed to parse range");
         let end: u32 = split[1].trim().parse().expect("Failed to parse range");
         for i in start..end {
-            iddfs::find_number(i);
+            bfs::find_number(i);
         }
         let duration = start_time.elapsed();
         println!("Took {:?}", duration);
     } else {
         let input: u32 = input.trim().parse().expect("Failed to parse range");
-        // bfs::find_number(input);
-        iddfs::find_number(input);
+        bfs::find_number(input);
+        // iddfs::find_number(input);
     }
 
 }
