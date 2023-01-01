@@ -2,11 +2,11 @@ use std::time::{Duration, Instant};
 use std::collections::{HashSet, VecDeque};
 use rug::{Integer, Complete};
 
-use crate::node::{Node, NodeType, print_result};
+use crate::node::{Node, NodeType};
 use crate::*;
 
 // Depth Limited Search
-pub fn find_number(wanted: u32, max_depth: usize) -> Result<Duration, Duration> {
+pub fn find_number(wanted: u32, max_depth: usize) -> Result<(Node, Duration), Duration> {
 
     // Declarations
     let mut stack: VecDeque<Node> = VecDeque::new();
@@ -38,10 +38,8 @@ pub fn find_number(wanted: u32, max_depth: usize) -> Result<Duration, Duration> 
 
         // Check node
         if current_node.value == wanted {
-            if !current_node.isInteger  { current_node.operations.push(NodeType::Floor) }
-            let total_duration = total_start.elapsed();
-            print_result(current_node, wanted, total_duration);
-            break Ok(total_start.elapsed());
+            if !current_node.is_integer { current_node.operations.push(NodeType::Floor) }
+            break Ok((current_node, total_start.elapsed()));
         }
 
         if current_node.operations.len()-1 < max_depth {

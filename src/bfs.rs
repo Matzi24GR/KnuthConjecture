@@ -1,13 +1,13 @@
-use std::time::Instant;
+use std::time::{Duration, Instant};
 use std::collections::{HashSet, VecDeque};
 use rug::{Integer, Complete};
 use rug::ops::Pow;
 
-use crate::node::{Node, NodeType, print_result};
+use crate::node::{Node, NodeType};
 use crate::*;
 
 // Breadth First Search
-pub fn find_number(wanted: u32) -> Result<u32, &'static str> {
+pub fn find_number(wanted: u32) -> Result<(Node, Duration), &'static str> {
 
     // Declarations
     let mut queue: VecDeque<Node> = VecDeque::new();
@@ -38,10 +38,8 @@ pub fn find_number(wanted: u32) -> Result<u32, &'static str> {
 
         // Check node
         if current_node.value == wanted {
-            if !current_node.isInteger  { current_node.operations.push(NodeType::Floor) }
-            let total_duration = total_start.elapsed();
-            print_result(current_node, wanted, total_duration);
-            break Ok(wanted);
+            if !current_node.is_integer { current_node.operations.push(NodeType::Floor) }
+            break Ok((current_node, total_start.elapsed()));
         }
 
         // Insert child nodes to queue

@@ -31,40 +31,39 @@ impl NodeType {
 pub struct Node {
     pub value: Integer,
     pub operations: Vec<NodeType>,
-    pub isInteger: bool,
+    pub is_integer: bool,
 }
 
 impl Node {
     pub fn new(value: u32) -> Self {
-        Node{value: Integer::from(value), operations: vec![NodeType::InitialNumber], isInteger:true}
+        Node{value: Integer::from(value), operations: vec![NodeType::InitialNumber], is_integer:true}
     }
     pub fn new_child(&self, value: Integer, operation: NodeType) -> Self {
-        let mut isInteger = self.isInteger;
+        let mut is_integer = self.is_integer;
         let mut operations = self.operations.clone();
         match operation {
             NodeType::Factorial => {
-                if !isInteger { operations.push(NodeType::Floor) }
-                isInteger = true
+                if !is_integer { operations.push(NodeType::Floor) }
+                is_integer = true
             },
             NodeType::SquareRoot => {
-                isInteger = self.value == value.clone().pow(2)
+                is_integer = self.value == value.clone().pow(2)
             },
             _ => {},
         }
         operations.push(operation);
-        Node{value, operations, isInteger}
+        Node{value, operations, is_integer }
     }
-}
-
-pub fn print_result(node: Node, wanted: u32, total_duration: Duration) {
-    print!("Found {wanted} after {:?} at depth {}", total_duration, node.operations.len()-1);
-    if SHOW_STEPS {
-        print!(" | ");
-        for operation in node.operations {
-            operation.print();
-            print!(" -> ");
+    pub fn print(self, wanted: u32, total_duration: Duration) {
+        print!("Found {wanted:<5} after {:>10.2?} at depth {:<5}", total_duration, self.operations.len()-1);
+        if SHOW_STEPS {
+            print!(" | ");
+            for operation in self.operations {
+                operation.print();
+                print!(" -> ");
+            }
+            print!("{wanted}");
         }
-        print!("{wanted}");
+        println!();
     }
-    println!();
 }
