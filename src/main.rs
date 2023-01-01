@@ -1,8 +1,6 @@
 use std::io;
 use std::io::Write;
-use std::env;
-use std::ops::Div;
-use std::time::{Duration, Instant};
+use std::time::Instant;
 use crate::AlgorithmOption::{BFS, BOTH, IDDFS};
 
 mod bfs;
@@ -10,7 +8,7 @@ mod node;
 mod iddfs;
 mod dls;
 
-pub static SHOW_STEPS: bool = true;
+pub static SHOW_STEPS: bool = false;
 pub static SHOW_DEPTH: bool = false;
 pub static SHOW_QUEUE_STACK_EVERY_STEP: bool = false; // Warning: Large Numbers!
 pub static SHOW_TIME_EVERY_STEP: bool = false;

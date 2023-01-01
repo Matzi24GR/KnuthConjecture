@@ -1,7 +1,6 @@
 use std::time::{Duration, Instant};
 use std::collections::{HashSet, VecDeque};
 use rug::{Integer, Complete};
-use rug::ops::Pow;
 
 use crate::node::{Node, NodeType};
 use crate::*;
