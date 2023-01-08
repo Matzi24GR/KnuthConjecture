@@ -56,8 +56,7 @@ fn insert_factorial(node: &Node, visited: &mut HashSet<Integer>, queue: &mut Vec
     if node.value < FACTORIAL_LIMIT {
         let x = node.value.to_u32().expect("Number too big for factorial");
         let value = Integer::factorial(x).complete();
-        if !visited.contains(&value) {
-            visited.insert(value.clone());
+        if visited.insert(value.clone()) {
             queue.push_back(node.new_child(value, NodeType::Factorial))
         }
         
@@ -66,8 +65,7 @@ fn insert_factorial(node: &Node, visited: &mut HashSet<Integer>, queue: &mut Vec
 
 fn insert_square_root(node: &Node, visited: &mut HashSet<Integer>, queue: &mut VecDeque<Node>) {
     let value = node.value.clone().sqrt();
-    if !visited.contains(&value) {
-        visited.insert(value.clone());
+    if visited.insert(value.clone()) {
         queue.push_back(node.new_child(value, NodeType::SquareRoot))
     }
 }
