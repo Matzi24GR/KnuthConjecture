@@ -1,14 +1,14 @@
 use std::io;
 use std::io::Write;
 use std::time::Instant;
-use crate::AlgorithmOption::{BFS, BOTH, IDDFS};
+use crate::AlgorithmOption::{BFS, BOTH, DLS, IDDFS};
 
-mod bfs;
-mod node;
-mod iddfs;
-mod dls;
+pub mod node;
+pub mod bfs;
+pub mod iddfs;
+pub mod dls;
 
-pub static SHOW_STEPS: bool = false;
+pub static SHOW_STEPS: bool = true;
 pub static SHOW_DEPTH: bool = false;
 pub static SHOW_QUEUE_STACK_EVERY_STEP: bool = false; // Warning: Large Numbers!
 pub static SHOW_TIME_EVERY_STEP: bool = false;
@@ -42,6 +42,17 @@ fn main() {
                 let percentage = difference as f64 / total_duration1.as_micros() as f64 * 100.0;
                 println!("Result: IDDFS took {:+.2}% time", percentage)
             },
+            DLS => {
+                print!("Enter limit: ");
+                io::stdout().flush().unwrap();
+                let mut input = String::new();
+                io::stdin()
+                    .read_line(&mut input)
+                    .expect("Failed to read line");
+                let input: u32 = input.trim().parse().expect("Failed to parse number");
+                let (wanted_node, total_duration) = dls::find_number(i, input).expect("Couldn't find number");
+                wanted_node.print(i, total_duration)
+            }
         }
     }
     let duration = start_time.elapsed();
@@ -51,13 +62,15 @@ fn main() {
 enum AlgorithmOption {
     BFS,
     IDDFS,
-    BOTH
+    BOTH,
+    DLS,
 }
 
 fn choose_algorithm() -> AlgorithmOption {
     println!("1. Breadth First Search");
     println!("2. Iterative Deepening Depth First Search");
     println!("3. Both");
+    println!("4. DLS (Debug)");
     print!("Enter Choice: ");
     io::stdout().flush().unwrap();
 
@@ -73,12 +86,13 @@ fn choose_algorithm() -> AlgorithmOption {
         1 => BFS,
         2 => IDDFS,
         3 => BOTH,
+        4 => DLS,
         _ => {choose_algorithm()}
     }
 }
 
 fn choose_number() -> (u32, u32) {
-    print!("Enter Number to search: ");
+    print!("Enter Number (or range of numbers like \"1-100\") to search: ");
     io::stdout().flush().unwrap();
 
     let mut input = String::new();

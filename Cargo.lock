@@ -10,9 +10,9 @@ checksum = "7b7e4c2464d97fe331d41de9d5db0def0a96f4d823b8b32a2efd503578988973"
 
 [[package]]
 name = "gmp-mpfr-sys"
-version = "1.4.10"
+version = "1.4.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ea3f42dadb6c75f122e9aa87e757ef11d4282f664c9f2e6476a9c2c8970f9d19"
+checksum = "2cadbfa1c6e195c872db93b584e63b751f2fc86f59af8d0870d529118e8f1045"
 dependencies = [
  "libc",
  "winapi",
@@ -20,7 +20,7 @@ dependencies = [
 
 [[package]]
 name = "knuth"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "rug",
 ]

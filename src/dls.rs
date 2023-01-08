@@ -6,7 +6,7 @@ use crate::node::{Node, NodeType};
 use crate::*;
 
 // Depth Limited Search
-pub fn find_number(wanted: u32, max_depth: usize) -> Result<(Node, Duration), Duration> {
+pub fn find_number(wanted: u32, max_depth: u32) -> Result<(Node, Duration), Duration> {
 
     // Declarations
     let mut stack: VecDeque<Node> = VecDeque::new();
@@ -23,7 +23,6 @@ pub fn find_number(wanted: u32, max_depth: usize) -> Result<(Node, Duration), Du
     let mut node_count = 0;
 
     loop {
-
         // Debug
         node_count+=1;
         let start = Instant::now();
@@ -42,10 +41,11 @@ pub fn find_number(wanted: u32, max_depth: usize) -> Result<(Node, Duration), Du
             break Ok((current_node, total_start.elapsed()));
         }
 
-        if current_node.operations.len()-1 < max_depth {
+        let real_depth = current_node.operations.len() - current_node.operations.iter().filter(|&n| n.is_floor()).count() -1;
+        if real_depth <= max_depth as usize {
             // Insert child nodes to stack
-            insert_factorial(&current_node, &mut visited, &mut stack);
             insert_square_root(&current_node, &mut visited, &mut stack);
+            insert_factorial(&current_node, &mut visited, &mut stack);
         }
 
         // Debug

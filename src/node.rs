@@ -14,7 +14,7 @@ pub enum NodeType {
 }
 
 impl NodeType {
-    fn print(self) {
+    pub fn print(self) {
         let string = match self {
             NodeType::InitialNumber => 4.to_string(),
             NodeType::Factorial => "Factorial".to_string(),
@@ -22,6 +22,12 @@ impl NodeType {
             NodeType::Floor => "Floor".to_string(),
         };
         print!("{string}");
+    }
+    pub fn is_floor(&self) -> bool {
+        match *self {
+            NodeType::Floor => true,
+            _ => false,
+        }
     }
 }
 

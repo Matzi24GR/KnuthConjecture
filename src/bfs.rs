@@ -71,3 +71,25 @@ fn insert_square_root(node: &Node, visited: &mut HashSet<Integer>, queue: &mut V
         queue.push_back(node.new_child(value, NodeType::SquareRoot))
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn verifyBFS() {
+        let wanted = 7;
+        let (result_node, _) = bfs::find_number(wanted).expect("Couldn't find number");
+        let operations = result_node.operations;
+        let mut number: Integer = Default::default();
+        for operation in operations {
+            number = match operation {
+                NodeType::Factorial => Integer::factorial(number.to_u32().expect("Error")).complete(),
+                NodeType::SquareRoot => number.sqrt(),
+                NodeType::Floor => number,
+                _ => Integer::from(4)
+            };
+            //operation.print();
+            println!("{:.90}", number.to_string());
+        }
+    }
+}
