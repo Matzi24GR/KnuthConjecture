@@ -41,8 +41,9 @@ pub fn find_number(wanted: u32, max_depth: u32) -> Result<(Node, Duration), Dura
             break Ok((current_node, total_start.elapsed()));
         }
 
+        // operations - floors - graph root node
         let real_depth = current_node.operations.len() - current_node.operations.iter().filter(|&n| n.is_floor()).count() -1;
-        if real_depth <= max_depth as usize {
+        if real_depth < max_depth as usize {
             // Insert child nodes to stack
             insert_square_root(&current_node, &mut visited, &mut stack);
             insert_factorial(&current_node, &mut visited, &mut stack);

@@ -27,7 +27,7 @@ fn main() {
                 wanted_node.print(i, total_duration)
             }
             IDDFS => {
-                let (wanted_node, total_duration) = bfs::find_number(i).expect("Couldn't find number");
+                let (wanted_node, total_duration) = iddfs::find_number(i).expect("Couldn't find number");
                 wanted_node.print(i, total_duration)
             }
             BOTH => {
