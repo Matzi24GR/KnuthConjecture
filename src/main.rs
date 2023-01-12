@@ -1,7 +1,8 @@
 use std::io;
 use std::io::Write;
 use std::time::Instant;
-use crate::AlgorithmOption::{BFS, BOTH, DLS, IDDFS};
+use rug::{Complete, Integer};
+use crate::AlgorithmOption::{BFS, BOTH, DLS, Factorial, IDDFS};
 
 pub mod node;
 pub mod bfs;
@@ -52,6 +53,12 @@ fn main() {
                 let input: u32 = input.trim().parse().expect("Failed to parse number");
                 let (wanted_node, total_duration) = dls::find_number(i, input).expect("Couldn't find number");
                 wanted_node.print(i, total_duration)
+            },
+            Factorial => {
+                let calculation_time = Instant::now();
+                let result = Integer::factorial(start).complete();
+                println!("Calculation took {:?}, printing result:", calculation_time.elapsed());
+                println!("{}", result);
             }
         }
     }
@@ -64,13 +71,16 @@ enum AlgorithmOption {
     IDDFS,
     BOTH,
     DLS,
+    Factorial,
 }
 
 fn choose_algorithm() -> AlgorithmOption {
     println!("1. Breadth First Search");
     println!("2. Iterative Deepening Depth First Search");
     println!("3. Both");
+    println!("--------");
     println!("4. DLS (Debug)");
+    println!("5. Factorial (Debug)");
     print!("Enter Choice: ");
     io::stdout().flush().unwrap();
 
@@ -87,6 +97,7 @@ fn choose_algorithm() -> AlgorithmOption {
         2 => IDDFS,
         3 => BOTH,
         4 => DLS,
+        5 => Factorial,
         _ => {choose_algorithm()}
     }
 }
